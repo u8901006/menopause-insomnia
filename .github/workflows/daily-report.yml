@@ -2,7 +2,7 @@ name: Menopause Insomnia Daily Report
 
 on:
   schedule:
-    - cron: "25 15 * * *" # UTC 15:25 = GMT+8 23:25
+    - cron: "25 15 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -16,7 +16,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "daily-report"
+  group: daily-report
   cancel-in-progress: false
 
 jobs:
@@ -25,12 +25,12 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           fetch-depth: 0
 
       - name: Setup Node.js 24
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: "24"
 
@@ -43,68 +43,45 @@ jobs:
             TARGET=$(TZ=Asia/Taipei date +%Y-%m-%d)
             echo "target=$TARGET" >> "$GITHUB_OUTPUT"
           fi
-          echo "Date: $(grep target "$GITHUB_OUTPUT" | cut -d= -f2)"
 
       - name: Fetch papers from PubMed
         run: |
-          node scripts/fetch_papers.mjs \
-            --days 7 \
-            --max-papers 50 \
-            --output papers.json
+          node scripts/fetch_papers.mjs --days 7 --max-papers 50 --output papers.json
         env:
           NODE_OPTIONS: "--dns-result-order=ipv4first"
         continue-on-error: true
         timeout-minutes: 5
 
-      - name: Fallback: fetch via curl if Node fetch failed
+      - name: Fallback fetch via curl
         run: |
           COUNT=$(node -e "const d=require('./papers.json'); console.log(d.count||0)" 2>/dev/null || echo "0")
           if [ "$COUNT" = "0" ]; then
-            echo "[WARN] Node fetch got 0 papers, trying curl fallback..."
+            echo "Node fetch got 0 papers, trying curl fallback..."
             LOOKBACK=$(date -d "-7 days" +%Y/%m/%d 2>/dev/null || date -v-7d +%Y/%m/%d)
-            QUERY="(menopause[tiab] OR menopausal[tiab] OR perimenopause[tiab] OR postmenopausal[tiab]) AND (insomnia[tiab] OR sleep[tiab] OR \"sleep quality\"[tiab] OR \"sleep disturbance\"[tiab]) AND \"${LOOKBACK}\"[Date - Publication] : \"3000\"[Date - Publication]"
-            SEARCH_URL="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmax=50&sort=date&retmode=json&tool=menopauseinsomnia&email=github-actions-bot@users.noreply.github.com"
-            echo "[INFO] Searching PubMed via curl..."
+            QUERY="(menopause[tiab] OR menopausal[tiab] OR perimenopause[tiab] OR postmenopausal[tiab]) AND (insomnia[tiab] OR sleep[tiab]) AND \"${LOOKBACK}\"[Date - Publication] : \"3000\"[Date - Publication]"
+            SEARCH_URL="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmax=50&sort=date&retmode=json&tool=menopauseinsomnia&email=bot@example.com"
             SEARCH_RESP=$(curl -s -G --data-urlencode "term=$QUERY" "$SEARCH_URL")
-            echo "[INFO] Search response: $(echo "$SEARCH_RESP" | head -c 200)"
-            PMIDS=$(echo "$SEARCH_RESP" | node -e "
-              const chunks = [];
-              process.stdin.on('data', c => chunks.push(c));
-              process.stdin.on('end', () => {
-                try {
-                  const d = JSON.parse(Buffer.concat(chunks).toString());
-                  console.log((d?.esearchresult?.idlist || []).join(','));
-                } catch(e) { console.log(''); }
-              });
-            ")
+            PMIDS=$(echo "$SEARCH_RESP" | node -e "const c=[];process.stdin.on('data',d=>c.push(d));process.stdin.on('end',()=>{try{const j=JSON.parse(Buffer.concat(c).toString());console.log((j?.esearchresult?.idlist||[]).join(','))}catch{console.log('')}})")
             if [ -n "$PMIDS" ] && [ "$PMIDS" != "" ]; then
-              echo "[INFO] Found PMIDs: $PMIDS"
-              FETCH_URL="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&tool=menopauseinsomnia&email=github-actions-bot@users.noreply.github.com"
-              curl -s -G --data-urlencode "id=$PMIDS" "$FETCH_URL" > /tmp/pubmed_raw.xml
-              echo "[INFO] XML fetched, size: $(wc -c < /tmp/pubmed_raw.xml) bytes"
+              echo "Found PMIDs via curl: $PMIDS"
+              FETCH_URL="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&tool=menopauseinsomnia&email=bot@example.com"
+              curl -s -G --data-urlencode "id=$PMIDS" "$FETCH_URL" > /tmp/pubmed.xml
               node -e "
-                const fs = require('fs');
-                const xml = fs.readFileSync('/tmp/pubmed_raw.xml', 'utf-8');
-                const papers = [];
-                const re = /<PubmedArticle>([\s\S]*?)<\/PubmedArticle>/g;
-                let m;
-                while ((m = re.exec(xml)) !== null) {
-                  const b = m[1];
-                  const getTag = (t) => { const r = b.match(new RegExp('<'+t+'[^>]*>([\\\\s\\\\S]*?)</'+t+'>')); return r ? r[1].replace(/<[^>]+>/g,'').trim() : ''; };
-                  const title = getTag('ArticleTitle');
-                  const journal = getTag('Title');
-                  const pmidM = b.match(/<PMID[^>]*>(\d+)<\/PMID>/);
-                  const pmid = pmidM ? pmidM[1] : '';
-                  if (title && pmid) papers.push({pmid, title, journal, date:'', abstract:'', url:'https://pubmed.ncbi.nlm.nih.gov/'+pmid+'/', keywords:[]});
+                const fs=require('fs'), xml=fs.readFileSync('/tmp/pubmed.xml','utf-8'), papers=[];
+                const re=/<PubmedArticle>([\s\S]*?)<\/PubmedArticle>/g;
+                let m; while((m=re.exec(xml))!==null){
+                  const b=m[1];
+                  const g=(t)=>{const r=b.match(new RegExp('<'+t+'[^>]*>([\\\\s\\\\S]*?)</'+t+'>'));return r?r[1].replace(/<[^>]+>/g,'').trim():''};
+                  const title=g('ArticleTitle'),journal=g('Title'),pm=b.match(/<PMID[^>]*>(\d+)</),pmid=pm?pm[1]:'';
+                  if(title&&pmid)papers.push({pmid,title,journal,date:'',abstract:'',url:'https://pubmed.ncbi.nlm.nih.gov/'+pmid+'/',keywords:[]});
                 }
-                const tz = new Date().toLocaleString('en-US',{timeZone:'Asia/Taipei'});
-                const date = tz.split(',')[0].replace(/(\d+)\/(\d+)\/(\d+)/,(_,m,d,y)=>y+'-'+m.padStart(2,'0')+'-'+d.padStart(2,'0'));
-                const out = {date, count: papers.length, papers};
-                fs.writeFileSync('papers.json', JSON.stringify(out, null, 2));
-                console.error('[INFO] Saved '+papers.length+' papers via curl fallback');
-              " --input-type=module 2>&1 || true
+                const tz=new Date().toLocaleString('en-US',{timeZone:'Asia/Taipei'});
+                const date=tz.split(',')[0].replace(/(\\d+)\\/(\\d+)\\/(\\d+)/,(_,m,d,y)=>y+'-'+m.padStart(2,'0')+'-'+d.padStart(2,'0'));
+                fs.writeFileSync('papers.json',JSON.stringify({date,count:papers.length,papers},null,2));
+                console.error('Saved '+papers.length+' papers via curl');
+              "
             else
-              echo "[WARN] curl fallback also found 0 papers"
+              echo "curl fallback also found 0 papers"
             fi
           fi
 
@@ -118,7 +95,7 @@ jobs:
           else
             echo "count=0" >> "$GITHUB_OUTPUT"
             echo '{"date":"${{ steps.date.outputs.target }}","count":0,"papers":[]}' > papers.json
-            echo "No papers found, will generate empty report"
+            echo "No papers found"
           fi
 
       - name: Generate report with Zhipu AI
@@ -139,13 +116,13 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/
           git diff --cached --quiet && echo "No changes to commit" && exit 0
-          git commit -m "?“¬ menopause insomnia daily report: ${{ steps.date.outputs.target }}"
+          git commit -m "daily report: ${{ steps.date.outputs.target }}"
           git pull --rebase origin main
           git push
 
       - name: Summary
         run: |
-          echo "### ?“¬ Menopause Insomnia Daily Report" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Menopause Insomnia Daily Report" >> "$GITHUB_STEP_SUMMARY"
           echo "**Date:** ${{ steps.date.outputs.target }}" >> "$GITHUB_STEP_SUMMARY"
           echo "**Papers analyzed:** ${{ steps.papers.outputs.count }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "**Report:** [menopause-insomnia-${{ steps.date.outputs.target }}.html](https://u8901006.github.io/menopause-insomnia/menopause-insomnia-${{ steps.date.outputs.target }}.html)" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Report:** [View](https://u8901006.github.io/menopause-insomnia/menopause-insomnia-${{ steps.date.outputs.target }}.html)" >> "$GITHUB_STEP_SUMMARY"
