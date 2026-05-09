@@ -51,8 +51,62 @@ jobs:
             --days 7 \
             --max-papers 50 \
             --output papers.json
+        env:
+          NODE_OPTIONS: "--dns-result-order=ipv4first"
         continue-on-error: true
         timeout-minutes: 5
+
+      - name: Fallback: fetch via curl if Node fetch failed
+        run: |
+          COUNT=$(node -e "const d=require('./papers.json'); console.log(d.count||0)" 2>/dev/null || echo "0")
+          if [ "$COUNT" = "0" ]; then
+            echo "[WARN] Node fetch got 0 papers, trying curl fallback..."
+            LOOKBACK=$(date -d "-7 days" +%Y/%m/%d 2>/dev/null || date -v-7d +%Y/%m/%d)
+            QUERY="(menopause[tiab] OR menopausal[tiab] OR perimenopause[tiab] OR postmenopausal[tiab]) AND (insomnia[tiab] OR sleep[tiab] OR \"sleep quality\"[tiab] OR \"sleep disturbance\"[tiab]) AND \"${LOOKBACK}\"[Date - Publication] : \"3000\"[Date - Publication]"
+            SEARCH_URL="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmax=50&sort=date&retmode=json&tool=menopauseinsomnia&email=github-actions-bot@users.noreply.github.com"
+            echo "[INFO] Searching PubMed via curl..."
+            SEARCH_RESP=$(curl -s -G --data-urlencode "term=$QUERY" "$SEARCH_URL")
+            echo "[INFO] Search response: $(echo "$SEARCH_RESP" | head -c 200)"
+            PMIDS=$(echo "$SEARCH_RESP" | node -e "
+              const chunks = [];
+              process.stdin.on('data', c => chunks.push(c));
+              process.stdin.on('end', () => {
+                try {
+                  const d = JSON.parse(Buffer.concat(chunks).toString());
+                  console.log((d?.esearchresult?.idlist || []).join(','));
+                } catch(e) { console.log(''); }
+              });
+            ")
+            if [ -n "$PMIDS" ] && [ "$PMIDS" != "" ]; then
+              echo "[INFO] Found PMIDs: $PMIDS"
+              FETCH_URL="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&tool=menopauseinsomnia&email=github-actions-bot@users.noreply.github.com"
+              curl -s -G --data-urlencode "id=$PMIDS" "$FETCH_URL" > /tmp/pubmed_raw.xml
+              echo "[INFO] XML fetched, size: $(wc -c < /tmp/pubmed_raw.xml) bytes"
+              node -e "
+                const fs = require('fs');
+                const xml = fs.readFileSync('/tmp/pubmed_raw.xml', 'utf-8');
+                const papers = [];
+                const re = /<PubmedArticle>([\s\S]*?)<\/PubmedArticle>/g;
+                let m;
+                while ((m = re.exec(xml)) !== null) {
+                  const b = m[1];
+                  const getTag = (t) => { const r = b.match(new RegExp('<'+t+'[^>]*>([\\\\s\\\\S]*?)</'+t+'>')); return r ? r[1].replace(/<[^>]+>/g,'').trim() : ''; };
+                  const title = getTag('ArticleTitle');
+                  const journal = getTag('Title');
+                  const pmidM = b.match(/<PMID[^>]*>(\d+)<\/PMID>/);
+                  const pmid = pmidM ? pmidM[1] : '';
+                  if (title && pmid) papers.push({pmid, title, journal, date:'', abstract:'', url:'https://pubmed.ncbi.nlm.nih.gov/'+pmid+'/', keywords:[]});
+                }
+                const tz = new Date().toLocaleString('en-US',{timeZone:'Asia/Taipei'});
+                const date = tz.split(',')[0].replace(/(\d+)\/(\d+)\/(\d+)/,(_,m,d,y)=>y+'-'+m.padStart(2,'0')+'-'+d.padStart(2,'0'));
+                const out = {date, count: papers.length, papers};
+                fs.writeFileSync('papers.json', JSON.stringify(out, null, 2));
+                console.error('[INFO] Saved '+papers.length+' papers via curl fallback');
+              " --input-type=module 2>&1 || true
+            else
+              echo "[WARN] curl fallback also found 0 papers"
+            fi
+          fi
 
       - name: Check papers data
         id: papers
