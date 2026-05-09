@@ -182,15 +182,25 @@ async function pubmedSearch(query, retmax = 50) {
     sort: 'date',
     retmode: 'json',
   });
-  const url = `${PUBMED_SEARCH}?${params.toString()}`;
   try {
-    const resp = await fetch(url, {
-      headers: { 'User-Agent': USER_AGENT },
+    const resp = await fetch(PUBMED_SEARCH, {
+      method: 'POST',
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
       signal: AbortSignal.timeout(30000),
     });
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const data = await resp.json();
-    return data?.esearchresult?.idlist || [];
+    const text = await resp.text();
+    try {
+      const data = JSON.parse(text);
+      return data?.esearchresult?.idlist || [];
+    } catch {
+      console.error(`[ERROR] PubMed returned non-JSON: ${text.slice(0, 100)}`);
+      return [];
+    }
   } catch (e) {
     console.error(`[ERROR] PubMed search failed: ${e.message}`);
     return [];
@@ -239,10 +249,14 @@ async function fetchDetails(pmids) {
     id: pmids.join(','),
     retmode: 'xml',
   });
-  const url = `${PUBMED_FETCH}?${params.toString()}`;
   try {
-    const resp = await fetch(url, {
-      headers: { 'User-Agent': USER_AGENT },
+    const resp = await fetch(PUBMED_FETCH, {
+      method: 'POST',
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
       signal: AbortSignal.timeout(60000),
     });
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
