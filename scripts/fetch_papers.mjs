@@ -8,6 +8,8 @@ const ROOT = resolve(__dirname, '..');
 const PUBMED_SEARCH = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi';
 const PUBMED_FETCH = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
 const USER_AGENT = 'MenopauseInsomniaBot/1.0 (research aggregator)';
+const NCBI_TOOL = 'menopauseinsomnia';
+const NCBI_EMAIL = 'github-actions[bot]@users.noreply.github.com';
 
 const JOURNALS = [
   'Menopause',
@@ -92,19 +94,38 @@ function loadSummarizedPmids() {
 }
 
 async function pubmedSearch(query, retmax = 50) {
-  const url = `${PUBMED_SEARCH}?db=pubmed&term=${encodeURIComponent(query)}&retmax=${retmax}&sort=date&retmode=json`;
+  const params = new URLSearchParams({
+    db: 'pubmed',
+    term: query,
+    retmax: String(retmax),
+    sort: 'date',
+    retmode: 'json',
+    tool: NCBI_TOOL,
+    email: NCBI_EMAIL,
+  });
+  const url = `${PUBMED_SEARCH}?${params.toString()}`;
   try {
     const resp = await fetch(url, {
-      headers: { 'User-Agent': USER_AGENT },
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Accept': 'application/json',
+      },
       signal: AbortSignal.timeout(30000),
     });
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    if (!resp.ok) {
+      console.error(`[ERROR] PubMed HTTP ${resp.status}`);
+      return [];
+    }
     const text = await resp.text();
+    if (text.startsWith('<!') || text.startsWith('<html')) {
+      console.error(`[ERROR] PubMed returned HTML error page`);
+      return [];
+    }
     try {
       const data = JSON.parse(text);
       return data?.esearchresult?.idlist || [];
     } catch {
-      console.error(`[ERROR] PubMed returned non-JSON: ${text.slice(0, 100)}`);
+      console.error(`[ERROR] PubMed non-JSON: ${text.slice(0, 80)}`);
       return [];
     }
   } catch (e) {
@@ -150,10 +171,20 @@ function extractKeywords(xml) {
 
 async function fetchDetails(pmids) {
   if (!pmids.length) return [];
-  const url = `${PUBMED_FETCH}?db=pubmed&id=${pmids.join(',')}&retmode=xml`;
+  const params = new URLSearchParams({
+    db: 'pubmed',
+    id: pmids.join(','),
+    retmode: 'xml',
+    tool: NCBI_TOOL,
+    email: NCBI_EMAIL,
+  });
+  const url = `${PUBMED_FETCH}?${params.toString()}`;
   try {
     const resp = await fetch(url, {
-      headers: { 'User-Agent': USER_AGENT },
+      headers: {
+        'User-Agent': USER_AGENT,
+        'Accept': 'text/xml',
+      },
       signal: AbortSignal.timeout(60000),
     });
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
@@ -207,9 +238,9 @@ async function main() {
   for (const sq of SEARCH_QUERIES) {
     const fullQuery = `${sq.query} AND ${dateFilter}`;
     console.error(`[INFO] Running search: ${sq.name}...`);
-    const ids = await pubmedSearch(fullQuery, opts.maxPapers);
+    const ids = await pubmedSearch(sq.query, opts.maxPapers);
     for (const id of ids) allPmids.add(id);
-    await new Promise(r => setTimeout(r, 400));
+    await new Promise(r => setTimeout(r, 1500));
   }
 
   console.error(`[INFO] Unique PMIDs found: ${allPmids.size}`);
