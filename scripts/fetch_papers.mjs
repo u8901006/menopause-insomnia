@@ -52,99 +52,16 @@ const JOURNALS = [
   'Menopause',
 ];
 
+const MENOPAUSE_BLOCK = '(menopause[tiab] OR menopausal[tiab] OR perimenopause[tiab] OR perimenopausal[tiab] OR postmenopausal[tiab])';
+const SLEEP_BLOCK = '(insomnia[tiab] OR sleep[tiab] OR "sleep quality"[tiab] OR "sleep disturbance"[tiab])';
+
 const SEARCH_QUERIES = [
-  {
-    name: 'broad_master',
-    query: [
-      '("Menopause"[Mesh] OR menopause[tiab] OR menopausal[tiab]',
-      'OR perimenopause[tiab] OR perimenopausal[tiab]',
-      'OR postmenopause[tiab] OR postmenopausal[tiab]',
-      'OR climacteric*[tiab] OR "menopausal transition"[tiab]',
-      'OR "midlife women"[tiab] OR "mid-life women"[tiab])',
-      'AND',
-      '("Sleep Initiation and Maintenance Disorders"[Mesh]',
-      'OR "Sleep Wake Disorders"[Mesh]',
-      'OR insomnia[tiab] OR "insomnia disorder"[tiab]',
-      'OR "sleep disturbance"[tiab] OR "sleep disturbances"[tiab]',
-      'OR "sleep problem"[tiab] OR "sleep problems"[tiab]',
-      'OR "sleep disorder"[tiab] OR "sleep disorders"[tiab]',
-      'OR "poor sleep"[tiab] OR "sleep quality"[tiab]',
-      'OR "sleep maintenance"[tiab] OR "sleep onset"[tiab]',
-      'OR "early awakening"[tiab] OR "night awakening"[tiab]',
-      'OR "nocturnal awakening"[tiab] OR WASO[tiab])',
-    ].join(' '),
-  },
-  {
-    name: 'vasomotor_sleep',
-    query: [
-      '(menopause[tiab] OR menopausal[tiab] OR perimenopause[tiab] OR perimenopausal[tiab])',
-      'AND',
-      '(insomnia[tiab] OR "sleep disturbance"[tiab] OR "sleep disturbances"[tiab] OR "sleep quality"[tiab])',
-      'AND',
-      '("hot flash"[tiab] OR "hot flashes"[tiab] OR "hot flush"[tiab] OR "hot flushes"[tiab]',
-      'OR "night sweat"[tiab] OR "night sweats"[tiab] OR "vasomotor symptom"[tiab] OR "vasomotor symptoms"[tiab])',
-    ].join(' '),
-  },
-  {
-    name: 'mood_sleep',
-    query: [
-      '(menopause[tiab] OR menopausal[tiab] OR perimenopausal[tiab] OR postmenopausal[tiab])',
-      'AND',
-      '(insomnia[tiab] OR "sleep disturbance"[tiab] OR "sleep disturbances"[tiab] OR "sleep quality"[tiab])',
-      'AND',
-      '(depression[tiab] OR depressive[tiab] OR anxiety[tiab] OR anxious[tiab]',
-      'OR "psychological distress"[tiab] OR stress[tiab] OR irritability[tiab])',
-    ].join(' '),
-  },
-  {
-    name: 'treatment_cbti',
-    query: [
-      '(menopause[tiab] OR menopausal[tiab] OR perimenopausal[tiab] OR postmenopausal[tiab])',
-      'AND',
-      '(insomnia[tiab] OR "sleep disturbance"[tiab] OR "sleep disturbances"[tiab] OR "sleep quality"[tiab])',
-      'AND',
-      '("cognitive behavioral therapy"[tiab] OR CBT[tiab] OR CBT-I[tiab]',
-      'OR "behavioral sleep medicine"[tiab] OR "sleep hygiene"[tiab]',
-      'OR "stimulus control"[tiab] OR "sleep restriction"[tiab])',
-    ].join(' '),
-  },
-  {
-    name: 'hormone_therapy',
-    query: [
-      '(menopause[tiab] OR menopausal[tiab] OR perimenopausal[tiab] OR postmenopausal[tiab])',
-      'AND',
-      '(insomnia[tiab] OR "sleep disturbance"[tiab] OR "sleep quality"[tiab])',
-      'AND',
-      '("hormone therapy"[tiab] OR "hormone replacement"[tiab]',
-      'OR estrogen[tiab] OR estradiol[tiab] OR progesterone[tiab] OR progestin[tiab])',
-    ].join(' '),
-  },
-  {
-    name: 'nutrition_lifestyle',
-    query: [
-      '(menopause[tiab] OR menopausal[tiab] OR perimenopausal[tiab] OR postmenopausal[tiab])',
-      'AND',
-      '(insomnia[tiab] OR "sleep disturbance"[tiab] OR "sleep disturbances"[tiab] OR "sleep quality"[tiab])',
-      'AND',
-      '(nutrition[tiab] OR diet[tiab] OR dietary[tiab] OR caffeine[tiab] OR alcohol[tiab]',
-      'OR "soy isoflavone"[tiab] OR phytoestrogen[tiab] OR magnesium[tiab]',
-      'OR "vitamin D"[tiab] OR omega-3[tiab] OR exercise[tiab]',
-      'OR "physical activity"[tiab] OR yoga[tiab] OR mindfulness[tiab] OR acupuncture[tiab])',
-    ].join(' '),
-  },
-  {
-    name: 'neuroscience',
-    query: [
-      '(menopause[tiab] OR menopausal[tiab] OR perimenopausal[tiab] OR postmenopausal[tiab])',
-      'AND',
-      '(insomnia[tiab] OR "sleep disturbance"[tiab] OR "sleep quality"[tiab] OR sleep[tiab])',
-      'AND',
-      '(neuroendocrine[tiab] OR neurobiology[tiab] OR estradiol[tiab] OR hypothalamus[tiab]',
-      'OR thermoregulation[tiab] OR orexin[tiab] OR GABA[tiab] OR serotonin[tiab]',
-      'OR cortisol[tiab] OR "HPA axis"[tiab] OR inflammation[tiab]',
-      'OR circadian[tiab] OR melatonin[tiab] OR actigraphy[tiab] OR polysomnography[tiab])',
-    ].join(' '),
-  },
+  { name: 'core', query: `${MENOPAUSE_BLOCK} AND (insomnia[tiab] OR "sleep quality"[tiab] OR "sleep disturbance"[tiab])` },
+  { name: 'vasomotor', query: `${MENOPAUSE_BLOCK} AND ${SLEEP_BLOCK} AND ("hot flashes"[tiab] OR "night sweats"[tiab] OR "vasomotor"[tiab])` },
+  { name: 'mood', query: `${MENOPAUSE_BLOCK} AND ${SLEEP_BLOCK} AND (depression[tiab] OR anxiety[tiab] OR stress[tiab])` },
+  { name: 'treatment', query: `${MENOPAUSE_BLOCK} AND ${SLEEP_BLOCK} AND (CBT-I[tiab] OR "cognitive behavioral"[tiab] OR "hormone therapy"[tiab] OR estrogen[tiab])` },
+  { name: 'lifestyle', query: `${MENOPAUSE_BLOCK} AND ${SLEEP_BLOCK} AND (exercise[tiab] OR yoga[tiab] OR acupuncture[tiab] OR diet[tiab] OR nutrition[tiab])` },
+  { name: 'neuro', query: `${MENOPAUSE_BLOCK} AND ${SLEEP_BLOCK} AND (estradiol[tiab] OR cortisol[tiab] OR circadian[tiab] OR actigraphy[tiab] OR polysomnography[tiab])` },
 ];
 
 function parseArgs() {
@@ -175,21 +92,10 @@ function loadSummarizedPmids() {
 }
 
 async function pubmedSearch(query, retmax = 50) {
-  const params = new URLSearchParams({
-    db: 'pubmed',
-    term: query,
-    retmax: String(retmax),
-    sort: 'date',
-    retmode: 'json',
-  });
+  const url = `${PUBMED_SEARCH}?db=pubmed&term=${encodeURIComponent(query)}&retmax=${retmax}&sort=date&retmode=json`;
   try {
-    const resp = await fetch(PUBMED_SEARCH, {
-      method: 'POST',
-      headers: {
-        'User-Agent': USER_AGENT,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: params.toString(),
+    const resp = await fetch(url, {
+      headers: { 'User-Agent': USER_AGENT },
       signal: AbortSignal.timeout(30000),
     });
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
@@ -244,19 +150,10 @@ function extractKeywords(xml) {
 
 async function fetchDetails(pmids) {
   if (!pmids.length) return [];
-  const params = new URLSearchParams({
-    db: 'pubmed',
-    id: pmids.join(','),
-    retmode: 'xml',
-  });
+  const url = `${PUBMED_FETCH}?db=pubmed&id=${pmids.join(',')}&retmode=xml`;
   try {
-    const resp = await fetch(PUBMED_FETCH, {
-      method: 'POST',
-      headers: {
-        'User-Agent': USER_AGENT,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: params.toString(),
+    const resp = await fetch(url, {
+      headers: { 'User-Agent': USER_AGENT },
       signal: AbortSignal.timeout(60000),
     });
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
