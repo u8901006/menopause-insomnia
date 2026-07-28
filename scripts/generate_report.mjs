@@ -5,9 +5,9 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 
-const API_BASE = process.env.ZHIPU_API_BASE || 'https://open.bigmodel.cn/api/coding/paas/v4';
-const MODELS = ['GLM-5-Turbo', 'GLM-4.7', 'GLM-4.7-Flash'];
-const MAX_TOKENS = 50000;
+const API_BASE = process.env.NVIDIA_API_BASE || 'https://integrate.api.nvidia.com/v1';
+const MODELS = ['nvidia/nemotron-3-super-120b-a12b', 'nvidia/nemotron-3-nano-30b-a3b'];
+const MAX_TOKENS = 16384;
 const TIMEOUT_MS = 480_000;
 
 const SYSTEM_PROMPT = `你是更年期失眠與女性中年睡眠醫學領域的深度研究分析與評論專家。你的任務是：
@@ -166,9 +166,11 @@ ${papersText}
             { role: 'system', content: SYSTEM_PROMPT },
             { role: 'user', content: prompt },
           ],
-          temperature: 0.3,
-          top_p: 0.9,
+          temperature: 1.0,
+          top_p: 0.95,
           max_tokens: MAX_TOKENS,
+          stream: false,
+          chat_template_kwargs: { enable_thinking: false },
         };
 
         const resp = await fetch(`${API_BASE}/chat/completions`, {
@@ -395,7 +397,7 @@ function generateHtml(analysis) {
       <div class="header-meta">
         <span class="badge badge-date">\u{1F4C5} ${dateDisplay}</span>
         <span class="badge badge-count">\u{1F4DA} ${totalCount} 篇文獻</span>
-        <span class="badge badge-source">Powered by PubMed + Zhipu AI</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA Nemotron</span>
       </div>
     </div>
   </header>
@@ -465,9 +467,9 @@ function updateSummarizedPmids(papers) {
 
 async function main() {
   const opts = parseArgs();
-  const apiKey = process.env.ZHIPU_API_KEY || '';
+  const apiKey = process.env.NVIDIA_API_KEY || '';
   if (!apiKey) {
-    console.error('[ERROR] ZHIPU_API_KEY environment variable is required');
+    console.error('[ERROR] NVIDIA_API_KEY environment variable is required');
     process.exit(1);
   }
 

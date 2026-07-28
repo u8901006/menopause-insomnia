@@ -4,7 +4,7 @@
 
 ## 簡介
 
-本專案透過 GitHub Actions 定時排程（每日 GMT+8 23:25），自動從 PubMed 擷取過去 7 天內最新的更年期失眠相關研究文獻，經 Zhipu AI（GLM-5-Turbo）分析後生成精美的 HTML 日報，部署至 GitHub Pages。
+本專案透過 GitHub Actions 定時排程（每日 GMT+8 23:25），自動從 PubMed 擷取過去 7 天內最新的更年期失眠相關研究文獻，經 NVIDIA Nemotron 3 Super 120B 分析後生成精美的 HTML 日報，部署至 GitHub Pages。
 
 ## 涵蓋範圍
 
@@ -21,7 +21,7 @@
 | 元件 | 技術 |
 |------|------|
 | 文獻來源 | PubMed E-utilities API |
-| AI 分析 | Zhipu GLM-5-Turbo（fallback: GLM-4.7 → GLM-4.7-Flash）|
+| AI 分析 | NVIDIA Nemotron 3 Super 120B（fallback: Nemotron 3 Nano 30B）|
 | 執行環境 | Node.js 24 |
 | 排程 | GitHub Actions (cron) |
 | 部署 | GitHub Pages |

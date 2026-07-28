@@ -46,7 +46,7 @@ function main() {
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Menopause Insomnia \u00b7 更年期失眠文獻日報</title>
-<meta name="description" content="更年期失眠文獻日報，每日自動更新，由 PubMed + Zhipu AI 驅動"/>
+<meta name="description" content="更年期失眠文獻日報，每日自動更新，由 PubMed + NVIDIA Nemotron 驅動"/>
 <style>
   :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -83,7 +83,7 @@ function main() {
     <a href="https://buymeacoffee.com/CYlee" class="link-btn" target="_blank" rel="noopener">\u{2615} Buy Me a Coffee</a>
   </div>
   <footer>
-    <p>Powered by PubMed + Zhipu AI \u00b7 <a href="https://github.com/u8901006/menopause-insomnia">GitHub</a></p>
+    <p>Powered by PubMed + NVIDIA Nemotron \u00b7 <a href="https://github.com/u8901006/menopause-insomnia">GitHub</a></p>
   </footer>
 </div>
 </body>
