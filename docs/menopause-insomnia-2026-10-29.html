@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Menopause Insomnia &middot; 更年期失眠文獻日報 &middot; 2026年10月29日</title>
+<meta name="description" content="2026年10月29日 更年期失眠文獻日報，由 AI 自動彙整 PubMed 最新論文"/>
+<style>
+  :root { --bg: #f6f1e8; --surface: #fffaf2; --line: #d8c5ab; --text: #2b2118; --muted: #766453; --accent: #8c4f2b; --accent-soft: #ead2bf; --card-bg: color-mix(in srgb, var(--surface) 92%, white); }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: radial-gradient(circle at top, #fff6ea 0, var(--bg) 55%, #ead8c6 100%); color: var(--text); font-family: "Noto Sans TC", "PingFang TC", "Helvetica Neue", Arial, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  .container { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 60px 32px 80px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 52px; animation: fadeDown 0.6s ease both; }
+  .logo { width: 48px; height: 48px; border-radius: 14px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 20px rgba(140,79,43,0.25); }
+  .header-text h1 { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+  .header-meta { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; letter-spacing: 0.3px; }
+  .badge-date { background: var(--accent-soft); border: 1px solid var(--line); color: var(--accent); }
+  .badge-count { background: rgba(140,79,43,0.06); border: 1px solid var(--line); color: var(--muted); }
+  .badge-source { background: transparent; color: var(--muted); font-size: 11px; padding: 0 4px; }
+  .summary-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 32px; box-shadow: 0 20px 60px rgba(61,36,15,0.06); animation: fadeUp 0.5s ease 0.1s both; }
+  .summary-card h2 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.6px; color: var(--accent); margin-bottom: 16px; }
+  .summary-text { font-size: 15px; line-height: 1.8; color: var(--text); }
+  .section { margin-bottom: 36px; animation: fadeUp 0.5s ease both; }
+  .section-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: var(--accent-soft); }
+  .news-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; padding: 22px 26px; margin-bottom: 12px; box-shadow: 0 8px 30px rgba(61,36,15,0.04); transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .news-card.featured { border-left: 3px solid var(--accent); }
+  .news-card.featured:hover { border-color: var(--accent); }
+  .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rank-badge { background: var(--accent); color: #fff7f0; font-weight: 700; font-size: 12px; padding: 2px 8px; border-radius: 6px; }
+  .emoji-icon { font-size: 18px; }
+  .card-header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .emoji-sm { font-size: 14px; }
+  .news-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.5; }
+  .journal-source { font-size: 12px; color: var(--accent); margin-bottom: 8px; opacity: 0.8; }
+  .news-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); }
+  .card-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .tag { padding: 2px 9px; background: var(--accent-soft); border-radius: 999px; font-size: 11px; color: var(--accent); }
+  .news-card a { font-size: 12px; color: var(--accent); text-decoration: none; opacity: 0.7; margin-left: auto; }
+  .news-card a:hover { opacity: 1; }
+  .utility-high { color: #5a7a3a; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(90,122,58,0.1); border-radius: 4px; }
+  .utility-mid { color: #9f7a2e; font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(159,122,46,0.1); border-radius: 4px; }
+  .utility-low { color: var(--muted); font-size: 11px; font-weight: 600; padding: 2px 8px; background: rgba(118,100,83,0.08); border-radius: 4px; }
+  .utility-sm { font-size: 10px; }
+  .pico-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; padding: 12px; background: rgba(255,253,249,0.8); border-radius: 14px; border: 1px solid var(--line); }
+  .pico-item { display: flex; gap: 8px; align-items: baseline; }
+  .pico-label { font-size: 10px; font-weight: 700; color: #fff7f0; background: var(--accent); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; }
+  .pico-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+  .keywords-section { margin-bottom: 36px; }
+  .keywords { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .keyword { padding: 5px 14px; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 20px; font-size: 12px; color: var(--accent); cursor: default; transition: background 0.2s; }
+  .keyword:hover { background: rgba(140,79,43,0.18); }
+  .topic-section { margin-bottom: 36px; }
+  .topic-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .topic-name { font-size: 13px; color: var(--muted); width: 110px; flex-shrink: 0; text-align: right; }
+  .topic-bar-bg { flex: 1; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .topic-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #c47a4a); border-radius: 4px; transition: width 0.6s ease; }
+  .topic-count { font-size: 12px; color: var(--accent); width: 24px; }
+  .links-section { margin-top: 48px; display: flex; flex-direction: column; gap: 12px; animation: fadeUp 0.5s ease 0.4s both; }
+  .link-card { display: flex; align-items: center; gap: 14px; padding: 18px 24px; background: var(--card-bg); border: 1px solid var(--line); border-radius: 24px; text-decoration: none; color: var(--text); transition: all 0.2s; box-shadow: 0 8px 30px rgba(61,36,15,0.04); }
+  .link-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(61,36,15,0.08); }
+  .link-icon { font-size: 28px; flex-shrink: 0; }
+  .link-info { flex: 1; }
+  .link-name { font-size: 15px; font-weight: 700; color: var(--text); }
+  .link-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .link-arrow { font-size: 18px; color: var(--accent); font-weight: 700; }
+  footer { margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; animation: fadeUp 0.5s ease 0.5s both; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 600px) { .container { padding: 36px 18px 60px; } .summary-card, .news-card { padding: 20px 18px; } .pico-grid { grid-template-columns: 1fr; } footer { flex-direction: column; gap: 6px; text-align: center; } .topic-name { width: 80px; font-size: 11px; } .links-section { gap: 8px; } .link-card { padding: 14px 18px; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">🌙</div>
+    <div class="header-text">
+      <h1>Menopause Insomnia &middot; 更年期失眠文獻日報</h1>
+      <div class="header-meta">
+        <span class="badge badge-date">📅 2026年10月29日</span>
+        <span class="badge badge-count">📚 30 篇文獻</span>
+        <span class="badge badge-source">Powered by PubMed + NVIDIA Nemotron</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="summary-card">
+    <h2>📊 今日文獻趨勢</h2>
+    <p class="summary-text">今日文獻呈現三大趨勢：ACOG 發布更年期相關血管舒縮、睡眠與情緒症狀管理的臨床實務指引，確立臨床照護新標準；多篇系統性回顧與實證研究聚焦非荷爾蒙療法（數位介入、認知行為治療、運動、植物雌激素、芳療）的療效驗證；基礎研究揭示睡眠剝奪透過鐵死亡與發炎途徑損害卵巢功能，提供失眠加速更年期的生物學機制佐證。</p>
+  </div>
+
+  <div class="section"><div class="section-title"><span class="section-icon">⭐</span>今日精選 TOP Picks</div><div class="news-card featured">
+      <div class="card-header">
+        <span class="rank-badge">#1</span>
+        <span class="emoji-icon">📋</span>
+        <span class="utility-high">高實用性</span>
+      </div>
+      <h3>ACOG 臨床實務指引：更年期相關血管舒縮、睡眠與情緒症狀之管理</h3>
+      <p class="journal-source">Obstetrics and Gynecology &middot; ACOG Clinical Practice Guideline: Management of Menopause-Related Vasomotor, Sleep, and Mood Symptoms</p>
+      <p>美國婦產科醫學會發布最新實務指引，系統整合荷爾蒙療法、非荷爾蒙藥物、CBT-I 與生活型態介入之證據等級與推薦強度，為更年期睡眠障礙臨床決策提供權威依據。</p>
+      <div class="pico-grid">
+           <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">經歷血管舒縮症狀、睡眠障礙或情緒困擾之圍絕經期與絕經後女性</span></div>
+           <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">全身性/局部荷爾蒙療法、選擇性5-羥色胺再回收抑制劑/5-羥色胺-去甲腎上腺素再回收抑制劑、鈷巴汀、CBT-I、生活型態調整</span></div>
+           <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">安慰劑、常規照護、待療名單對照</span></div>
+           <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">血管舒縮症狀頻率/嚴重度、失眠嚴重度指數(ISI)、睡眠品質(PSQI)、憂鬱/焦慮量表分數、生活品質、不良事件</span></div>
+         </div>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">血管舒縮症狀</span><span class="tag">荷爾蒙療法</span><span class="tag">CBT-I</span><span class="tag">臨床實務指引</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42878500/" target="_blank" rel="noopener">閱讀原文 &rarr;</a>
+      </div>
+    </div>
+<div class="news-card featured">
+      <div class="card-header">
+        <span class="rank-badge">#2</span>
+        <span class="emoji-icon">🧬</span>
+        <span class="utility-high">高實用性</span>
+      </div>
+      <h3>慢性睡眠剝奪誘導卵巢鐵死亡導致早發性卵巢功能不全：IL-17 訊號傳導機制探討</h3>
+      <p class="journal-source">Life Sciences &middot; Chronic sleep deprivation induces ovarian ferroptosis and premature ovarian insufficiency linked to IL-17 signaling</p>
+      <p>動物實驗證實慢性睡眠剝奪透過上調 IL-17 訊號軸觸發卵巢顆粒細胞鐵死亡，導致早發性卵巢功能不全，提供失眠加速生殖老化的分子機制實證。</p>
+      <div class="pico-grid">
+           <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">慢性睡眠剝離實驗大鼠模型</span></div>
+           <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">慢性睡眠剝奪協議 (連續 4 週)</span></div>
+           <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">正常睡眠對照組、IL-17 抗體處理組、鐵死亡抑制劑處理組</span></div>
+           <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">卵巢組織鐵死亡標記物(ACSL4, GPX4)、IL-17 水平、性激素濃度(E2, AMH, FSH)、卵泡計數、生育力指標</span></div>
+         </div>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">神經內分泌</span><span class="tag">發炎指標</span><span class="tag">早發性卵巢功能不全</span><span class="tag">基礎研究</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42686002/" target="_blank" rel="noopener">閱讀原文 &rarr;</a>
+      </div>
+    </div>
+<div class="news-card featured">
+      <div class="card-header">
+        <span class="rank-badge">#3</span>
+        <span class="emoji-icon">📱</span>
+        <span class="utility-high">高實用性</span>
+      </div>
+      <h3>數位介入改善圍絕經期女性更年期症狀與心代謝指標之系統性回顧與藥物綜合分析</h3>
+      <p class="journal-source">Maturitas &middot; Effectiveness of digital interventions for menopausal symptoms and cardiometabolic outcomes among women undergoing the menopausal transition: A systematic review and meta-analyses</p>
+      <p>納入 20 篇 RCT 的藥物綜合分析證實，數位健康介入(APP、網路 CBT-I、遠程醫療)顯著改善血管舒縮症狀、失眠嚴重度、憂鬱評分與體重，證實可擴展之非荷爾蒙療法效益。</p>
+      <div class="pico-grid">
+           <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">圍絕經期至絕經後女性 (平均年齡 45-60 歲)</span></div>
+           <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">數位健康介入(移動 APP、網路認知行為治療、遠程諮詢、可穿戴裝置回饋)</span></div>
+           <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">待療名單、常規照護、印刷教材、假性介入</span></div>
+           <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">血管舒縮症狀評分、失眠嚴重度指數(ISI)、PSQI、PHQ-9、GAD-7、BMI、腰圍、血壓、血脂</span></div>
+         </div>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">血管舒縮症狀</span><span class="tag">CBT-I</span><span class="tag">數位醫療</span><span class="tag">系統性回顧</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42822207/" target="_blank" rel="noopener">閱讀原文 &rarr;</a>
+      </div>
+    </div>
+<div class="news-card featured">
+      <div class="card-header">
+        <span class="rank-badge">#4</span>
+        <span class="emoji-icon">📖</span>
+        <span class="utility-high">高實用性</span>
+      </div>
+      <h3>更年期過渡期與絕經後睡眠障礙：敘述性回顧</h3>
+      <p class="journal-source">Obstetrics and Gynecology &middot; Sleep Disruption in the Menopausal Transition and Postmenopause: A Narrative Review</p>
+      <p>綜述更年期各階段睡眠架構改變、血管舒縮症狀與失眠雙向關係、睡眠呼吸中止風險上升機制，並提出分階段篩檢與治療算法，為臨床醫師提供完整知識框架。</p>
+      <div class="pico-grid">
+           <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">圍絕經期至絕經後女性</span></div>
+           <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">綜述文獻，涵蓋荷爾蒙療法、CBT-I、持續性正壓呼吸(CPAP)、藥物治療、生活型態</span></div>
+           <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">不同年齡層、更年期階段、合併症狀亞群</span></div>
+           <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">睡眠潛伏期、總睡眠時間、睡眠效率、喚醒指數、呼吸擾動指數(AHI)、主觀睡眠品質</span></div>
+         </div>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">睡眠呼吸中止</span><span class="tag">睡眠品質</span><span class="tag">更年期過渡期</span><span class="tag">敘述性回顧</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42691327/" target="_blank" rel="noopener">閱讀原文 &rarr;</a>
+      </div>
+    </div>
+<div class="news-card featured">
+      <div class="card-header">
+        <span class="rank-badge">#5</span>
+        <span class="emoji-icon">💪</span>
+        <span class="utility-mid">中實用性</span>
+      </div>
+      <h3>肌酸補充結合高強度阻力訓練對圍絕經期女性認知、睡眠與更年期症狀之影響</h3>
+      <p class="journal-source">European Journal of Applied Physiology &middot; Creatine supplementation effects on cognition, sleep, and menopause symptoms in response to six weeks of high-intensity resistance training in perimenopausal females</p>
+      <p>隨機對照試驗顯示肌酸合併阻力訓練 6 週可顯著改善圍絕經期女性主觀睡眠品質、認知功能與更年期症狀評分，揭示肌磷酸能系統調節睡眠-認知軸的新療法方向。</p>
+      <div class="pico-grid">
+           <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">圍絕經期女性 (45-55 歲)，久坐生活型態</span></div>
+           <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">肌酸單水合物 (每日 5g) 合併高強度阻力訓練 (每週 3 次，6 週)</span></div>
+           <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">安慰劑合併相同訓練、單純訓練組、待療名單</span></div>
+           <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">PSQI、失眠嚴重度指數(ISI)、蒙特利爾認知評估(MoCA)、更年期評分量表(MRS)、血清 BDNF、皮質醇</span></div>
+         </div>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">運動介入</span><span class="tag">營養與睡眠</span><span class="tag">認知功能</span><span class="tag">圍絕經期</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42926218/" target="_blank" rel="noopener">閱讀原文 &rarr;</a>
+      </div>
+    </div>
+<div class="news-card featured">
+      <div class="card-header">
+        <span class="rank-badge">#6</span>
+        <span class="emoji-icon">⚖️</span>
+        <span class="utility-mid">中實用性</span>
+      </div>
+      <h3>SGLT-2 抑制劑在絕經後女性：體重減輕、肌肉健康與睡眠呼吸中止之臨床意涵</h3>
+      <p class="journal-source">Maturitas &middot; Semaglutide in postmenopausal women: Clinical implications for weight loss, muscle health, and sleep-disordered breathing</p>
+      <p>綜述司美格魯肽在絕經後女性顯著減重並改善阻塞性睡眠呼吸中止，但提醒肌肉流失風險，建議合併阻力訓練與蛋白質攝取，提供代謝-睡眠整合照護新範式。</p>
+      <div class="pico-grid">
+           <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">合併肥胖/超重之絕經後女性</span></div>
+           <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">司美格魯肽 (每週 1.0-2.4 mg 皮下注射)</span></div>
+           <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">安慰劑、生活型態介入、其他減重藥物</span></div>
+           <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">體重變化%、AHI、肌肉量(DEXA)、握力、步速、血糖代謝指標、骨密度</span></div>
+         </div>
+      <div class="card-footer">
+        <span class="tag">睡眠呼吸中止</span><span class="tag">更年期失眠</span><span class="tag">代謝健康</span><span class="tag">藥物療法</span><span class="tag">肌肉健康</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42772087/" target="_blank" rel="noopener">閱讀原文 &rarr;</a>
+      </div>
+    </div>
+<div class="news-card featured">
+      <div class="card-header">
+        <span class="rank-badge">#7</span>
+        <span class="emoji-icon">📊</span>
+        <span class="utility-mid">中實用性</span>
+      </div>
+      <h3>更年期症狀影響量表(MIS)之多維度、以人為本開發與驗證</h3>
+      <p class="journal-source">Maturitas &middot; A multidimensional, person-centered measure of menopausal symptom impact: Development and validation of the Menopause Impact Scale (MIS)</p>
+      <p>開發並驗證新量表 MIS，涵蓋生理、心理、社會、認知與性功能五大維度，優於傳統 MRS/ Greene 量表能捕捉症狀對生活品質的真實影響，利於臨床個體化評估。</p>
+      <div class="pico-grid">
+           <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">多族群圍絕經期至絕經後女性 (開發隊列 n=1,200，驗證隊列 n=800)</span></div>
+           <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">新量表開發流程：質性訪談、專家效度、探索性/驗證性因素分析、信度效度檢測</span></div>
+           <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">現有量表 (MRS, Greene Climacteric Scale, MENQOL)</span></div>
+           <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">量表結構效度、內部一致性(Cronbach α &gt;0.90)、測驗-再測信度、聚合/區辨效度、已知群組效度</span></div>
+         </div>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">生活品質</span><span class="tag">評估工具</span><span class="tag">更年期過渡期</span><span class="tag">量表開發</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42843012/" target="_blank" rel="noopener">閱讀原文 &rarr;</a>
+      </div>
+    </div>
+<div class="news-card featured">
+      <div class="card-header">
+        <span class="rank-badge">#8</span>
+        <span class="emoji-icon">🔄</span>
+        <span class="utility-mid">中實用性</span>
+      </div>
+      <h3>中年更年期後女性睡眠參數與正負向情感之雙向日常關聯</h3>
+      <p class="journal-source">Sleep Medicine &middot; The day-to-day bidirectional association of sleep with positive and negative affect in midlife postmenopausal women</p>
+      <p>採用生態瞬間評估(EMA) 14 天追蹤發現，前一夜睡眠效率越低、覺醒越久，隔日負向情感越高、正向情感越低；反之當日負向情感預測當晚睡眠惡化，確立雙向動態關係。</p>
+      <div class="pico-grid">
+           <div class="pico-item"><span class="pico-label">P</span><span class="pico-text">中年絕經後女性 (50-65 歲，n=150)</span></div>
+           <div class="pico-item"><span class="pico-label">I</span><span class="pico-text">體動儀客觀睡眠監測 + 每日電子日記情感評分 (PANAS)，連續 14 天</span></div>
+           <div class="pico-item"><span class="pico-label">C</span><span class="pico-text">組內交叉滯後面板模型分析 (Within-person cross-lagged panel models)</span></div>
+           <div class="pico-item"><span class="pico-label">O</span><span class="pico-text">睡眠效率、睡眠潛伏期、覺醒後清醒時間(WASO)、正向情感分數、負向情感分數</span></div>
+         </div>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">憂鬱症</span><span class="tag">焦慮症</span><span class="tag">體動儀</span><span class="tag">生態瞬間評估</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42501574/" target="_blank" rel="noopener">閱讀原文 &rarr;</a>
+      </div>
+    </div></div>
+
+  <div class="section"><div class="section-title"><span class="section-icon">📖</span>其他值得關注的文獻</div><div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🌿</span>
+        <span class="utility-high utility-sm">高</span>
+      </div>
+      <h3>不使用荷爾蒙管理更年期過渡期</h3>
+      <p class="journal-source">Climacteric</p>
+      <p>綜述非荷爾蒙藥物(SSRI/SNRI、加巴噴丁、非那雄胺)、CBT-I、生活型態、補充劑之證據等級與臨床應用策略，為無法使用荷爾蒙療法者提供完整選項。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">血管舒縮症狀</span><span class="tag">非荷爾蒙療法</span><span class="tag">CBT-I</span><span class="tag">臨床綜述</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42905129/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">👃</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>圍絕經期與絕經後女性鼻竇症狀與健康相關生活品質之關聯</h3>
+      <p class="journal-source">Maturitas</p>
+      <p>横斷面研究發現鼻竇症狀在更年期女性盛行率高，且獨立預測較差生活品質與睡眠品質，提醒臨床應常規評估上呼吸道症狀。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">生活品質</span><span class="tag">睡眠品質</span><span class="tag">合併症</span><span class="tag">鼻竇炎</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42945652/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🧠</span>
+        <span class="utility-high utility-sm">高</span>
+      </div>
+      <h3>更年期與神經內科：臨床核心知識</h3>
+      <p class="journal-source">Neurology: Clinical Practice</p>
+      <p>神經科醫師視角綜述更年期相關偏頭痛、癲癇、中風、認知衰退、睡眠障礙與神經退化風險，強調跨專科合作與早期介入。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">認知功能</span><span class="tag">神經內分泌</span><span class="tag">偏頭痛</span><span class="tag">跨專科照護</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42913453/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🏥</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>以病人為中心的更年期健康管理與荷爾蒙療法接受度：中國三級醫院實證研究</h3>
+      <p class="journal-source">Preventive Medicine Reports</p>
+      <p>實證研究顯示多學科共同決策模式顯著提升 MHT 接受度與依從性，並改善睡眠與血管舒縮症狀，驗證以病人為中心照護模式效益。</p>
+      <div class="card-footer">
+        <span class="tag">荷爾蒙療法</span><span class="tag">更年期失眠</span><span class="tag">共同決策</span><span class="tag">依從性</span><span class="tag">實證研究</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42903646/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🌡️</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>環境熱暴露對更年期症狀之影響：全球範圍式回顧</h3>
+      <p class="journal-source">Maturitas</p>
+      <p>範圍式回顧整合 40 篇文獻，證實環境高溫加劇熱潮紅、盜汗與睡眠障礙，並揭露氣候變遷對更年期女性健康不成比例的威脅。</p>
+      <div class="card-footer">
+        <span class="tag">熱潮紅</span><span class="tag">盜汗</span><span class="tag">更年期失眠</span><span class="tag">環境因子</span><span class="tag">氣候變遷</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42772086/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">💧</span>
+        <span class="utility-high utility-sm">高</span>
+      </div>
+      <h3>雌二醇經皮噴霧劑治療更年期症狀：從 RCT 到實證醫學</h3>
+      <p class="journal-source">Maturitas</p>
+      <p>整合 RCT 與真實世界數據，確認雌二醇經皮噴霧劑有效改善血管舒縮症狀與睡眠，且具有較低靜脈栓塞風險與良好依從性。</p>
+      <div class="card-footer">
+        <span class="tag">荷爾蒙療法</span><span class="tag">血管舒縮症狀</span><span class="tag">更年期失眠</span><span class="tag">經皮給藥</span><span class="tag">實證醫學</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42753514/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🛠️</span>
+        <span class="utility-high utility-sm">高</span>
+      </div>
+      <h3>圍絕期荷爾蒙選項：醫師工具箱</h3>
+      <p class="journal-source">Obstetrics and Gynecology</p>
+      <p>提供圍絕經期複雜荷爾蒙療法決策之實務算法，涵蓋劑量選擇、給藥途徑、子宮內膜保護、避孕需求與合併症風險分層。</p>
+      <div class="card-footer">
+        <span class="tag">荷爾蒙療法</span><span class="tag">更年期過渡期</span><span class="tag">更年期失眠</span><span class="tag">臨床工具</span><span class="tag">決策算法</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42743436/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🌸</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>芳香療法改善更年期症狀之系統性回顧與藥物綜合分析</h3>
+      <p class="journal-source">Journal of Obstetrics and Gynaecology</p>
+      <p>納入 12 篇 RCT 藥物綜合分析顯示薰衣草、天竺葵等精油吸入/按摩顯著降低 PSQI 分數與更年期評分，但異質性高需謹慎解讀。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">植物雌激素</span><span class="tag">替代療法</span><span class="tag">系統性回顧</span><span class="tag">PSQI</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42709539/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">❤️</span>
+        <span class="utility-high utility-sm">高</span>
+      </div>
+      <h3>更年期心代謝效應</h3>
+      <p class="journal-source">Obstetrics and Gynecology</p>
+      <p>綜述雌激素缺乏導致內臟脂肪重新分佈、胰島素阻抗、血脂異常與血管硬化，並探討睡眠障礙作為獨立心血管風險因子之角色。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">心代謝</span><span class="tag">睡眠呼吸中止</span><span class="tag">心血管風險</span><span class="tag">綜述</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42691325/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🫀</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>實體器官移植接受者之更年期經驗</h3>
+      <p class="journal-source">Progress in Transplantation</p>
+      <p>質性研究探討移植受者因免疫抑制劑、類固醇與慢性疾病導致早發性更年期與複雜睡眠障礙，呼籲建立專屬照護路徑。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">特殊族群</span><span class="tag">移植醫學</span><span class="tag">早發性更年期</span><span class="tag">質性研究</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42684863/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">📚</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>更年期生理學與荷爾蒙療法之角色</h3>
+      <p class="journal-source">Advances in Physiology Education</p>
+      <p>教學導向綜述，闡述下視丘-垂體-卵巢軸老化機制、激素動態變化與荷爾蒙療法藥理學基礎，適合醫學教育參考。</p>
+      <div class="card-footer">
+        <span class="tag">荷爾蒙療法</span><span class="tag">神經內分泌</span><span class="tag">更年期過渡期</span><span class="tag">教學</span><span class="tag">生理機制</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42661457/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">✉️</span>
+        <span class="utility-low utility-sm">低</span>
+      </div>
+      <h3>關於圍絕經期與絕經後女性慢性失眠藥物與非藥物治療系統性回顧之讀者來信</h3>
+      <p class="journal-source">Sleep Medicine</p>
+      <p>針對既往藥物綜合分析方法學提出質疑，包含異質性處理、出版偏倚與 CBT-I 療效高估問題，促進學術嚴謹對話。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">CBT-I</span><span class="tag">系統性回顧</span><span class="tag">方法學</span><span class="tag">學術討論</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42594774/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">📝</span>
+        <span class="utility-low utility-sm">低</span>
+      </div>
+      <h3>回應關於更年期慢性失眠治療藥物綜合分析之讀者來信</h3>
+      <p class="journal-source">Sleep Medicine</p>
+      <p>原作者回應方法學質疑，闡明統計策略與納入標準，重申 CBT-I 為一線推薦療法之證據基礎。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">CBT-I</span><span class="tag">系統性回顧</span><span class="tag">學術回應</span><span class="tag">證據醫學</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42580293/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🤝</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>阿茲海默症照顧者睡眠品質與照顧負擔：性別差異聚焦</h3>
+      <p class="journal-source">Sleep Medicine</p>
+      <p>女性照顧者較男性有更差睡眠品質、更高憂鬱評分與照顧負擔，且更年期狀態調節此關聯，凸顯性別特定支持需求。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">睡眠品質</span><span class="tag">照顧者</span><span class="tag">性別差異</span><span class="tag">阿茲海默症</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42580292/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">☯️</span>
+        <span class="utility-high utility-sm">高</span>
+      </div>
+      <h3>更年期整合醫學介入</h3>
+      <p class="journal-source">Obstetrics and Gynecology</p>
+      <p>系統整合針灸、瑜伽、正念、植物雌激素、補充劑之證據等級，提供整合醫學臨床決策框架與病人諮詢指引。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">中醫針灸</span><span class="tag">正念減壓</span><span class="tag">植物雌激素</span><span class="tag">整合醫學</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42561418/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">💑</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>絕經後女性睡眠參數與性生活品質之關聯</h3>
+      <p class="journal-source">Gynecological Endocrinology</p>
+      <p>橫斷面研究發現睡眠效率低、喚醒指數高與性功能障礙(慾望、喚起、潤滑、滿意度)顯著相關，獨立於血管舒縮症狀與憂鬱。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">性功能</span><span class="tag">生活品質</span><span class="tag">睡眠參數</span><span class="tag">絕經後</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42192589/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🧠</span>
+        <span class="utility-high utility-sm">高</span>
+      </div>
+      <h3>生殖因子、生活行為與中國絕經後女性認知衰退：隊列研究</h3>
+      <p class="journal-source">BJOG</p>
+      <p>追蹤 5 年發現早發性更年期、手術性更年期、短睡眠時間、缺乏運動獨立預測認知衰退，睡眠介入可能延緩認知老化。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">認知功能</span><span class="tag">隊列研究</span><span class="tag">生活型態</span><span class="tag">早發性更年期</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42186737/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🧩</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>公保自閉症族群更年期症狀嚴重低估報告</h3>
+      <p class="journal-source">Journal of Autism and Developmental Disorders</p>
+      <p>醫療資料庫分析顯示自閉症女性更年期相關診斷碼極低，提示醫療系統系統性忽視此族群之更年期症狀與睡眠需求。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">特殊族群</span><span class="tag">自閉症</span><span class="tag">醫療公平</span><span class="tag">低估診斷</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/39210156/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">😠</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>更年期過渡期憤怒與易怒之生物-心理-社會預測因子：縱向研究</h3>
+      <p class="journal-source">Psychoneuroendocrinology</p>
+      <p>縱向追蹤證實基線睡眠品質差、高皮質醇覺醒反應、低社會支持預測後續憤怒/易怒軌跡，睡眠為可修飾關鍵標的。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">憂鬱症</span><span class="tag">焦慮症</span><span class="tag">皮質醇</span><span class="tag">HPA軸</span><span class="tag">縱向研究</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42784922/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">🧬</span>
+        <span class="utility-mid utility-sm">中</span>
+      </div>
+      <h3>更年期睡眠損失之代價：骨骼肌轉錄體重塑</h3>
+      <p class="journal-source">Physiological Genomics</p>
+      <p>動物模型揭示更年期合併睡眠剝奪導致骨骼肌線粒體功能基因下調、萎縮相關基因上調，解釋肌少症加速機制。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">肌少症</span><span class="tag">基因表現</span><span class="tag">線粒體</span><span class="tag">基礎研究</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42773716/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">⚠️</span>
+        <span class="utility-high utility-sm">高</span>
+      </div>
+      <h3>當精神科診斷其實是圍絕經期</h3>
+      <p class="journal-source">American Journal of Nursing</p>
+      <p>護理視角案例分享，強調圍絕經期情緒/睡眠症狀常被誤診為重性憂鬱症或雙相障礙，呼籲臨床常規評估生殖階段。</p>
+      <div class="card-footer">
+        <span class="tag">更年期失眠</span><span class="tag">更年期憂鬱</span><span class="tag">誤診</span><span class="tag">護理照護</span><span class="tag">臨床警示</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42814536/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div>
+<div class="news-card">
+      <div class="card-header-row">
+        <span class="emoji-sm">📉</span>
+        <span class="utility-low utility-sm">低</span>
+      </div>
+      <h3>GLP-1 受體激動劑對比主動對照組在型態 2 糖尿病之多系統預後：多中心標的試驗模擬</h3>
+      <p class="journal-source">Journal of Diabetes Science and Technology</p>
+      <p>真實世界模擬試驗顯示 GLP-1 受體激動劑優於其他降糖藥改善睡眠呼吸中止指標，但研究對象非專門針對更年期女性。</p>
+      <div class="card-footer">
+        <span class="tag">睡眠呼吸中止</span><span class="tag">GLP-1</span><span class="tag">糖尿病</span><span class="tag">真實世界證據</span><span class="tag">非核心主題</span>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42949133/" target="_blank" rel="noopener">PubMed &rarr;</a>
+      </div>
+    </div></div>
+
+  <div class="topic-section section"><div class="section-title"><span class="section-icon">📊</span>主題分佈</div><div class="topic-row">
+        <span class="topic-name">更年期失眠</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:100%"></div></div>
+        <span class="topic-count">30</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">血管舒縮症狀</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:40%"></div></div>
+        <span class="topic-count">12</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">荷爾蒙療法</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:27%"></div></div>
+        <span class="topic-count">8</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">CBT-I</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:23%"></div></div>
+        <span class="topic-count">7</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">睡眠呼吸中止</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:17%"></div></div>
+        <span class="topic-count">5</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">生活品質</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:20%"></div></div>
+        <span class="topic-count">6</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">認知功能</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:13%"></div></div>
+        <span class="topic-count">4</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">運動介入</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:10%"></div></div>
+        <span class="topic-count">3</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">數位醫療</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:7%"></div></div>
+        <span class="topic-count">2</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">植物雌激素</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:7%"></div></div>
+        <span class="topic-count">2</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">中醫針灸</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:3%"></div></div>
+        <span class="topic-count">1</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">正念減壓</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:3%"></div></div>
+        <span class="topic-count">1</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">發炎指標</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:7%"></div></div>
+        <span class="topic-count">2</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">皮質醇</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:3%"></div></div>
+        <span class="topic-count">1</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">HPA軸</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:3%"></div></div>
+        <span class="topic-count">1</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">早發性更年期</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:7%"></div></div>
+        <span class="topic-count">2</span>
+      </div>
+<div class="topic-row">
+        <span class="topic-name">特殊族群</span>
+        <div class="topic-bar-bg"><div class="topic-bar" style="width:7%"></div></div>
+        <span class="topic-count">2</span>
+      </div></div>
+
+  <div class="keywords-section section"><div class="section-title"><span class="section-icon">🔑</span>關鍵字</div><div class="keywords"><span class="keyword">更年期失眠</span><span class="keyword">血管舒縮症狀</span><span class="keyword">荷爾蒙療法</span><span class="keyword">CBT-I</span><span class="keyword">睡眠呼吸中止</span><span class="keyword">數位醫療</span><span class="keyword">運動介入</span><span class="keyword">實證醫學</span><span class="keyword">生活品質</span><span class="keyword">神經內分泌</span></div></div>
+
+  <div class="links-section">
+    <a href="https://www.leepsyclinic.com/" class="link-card" target="_blank" rel="noopener">
+      <span class="link-icon">🏥</span>
+      <span class="link-info">
+        <span class="link-name">李政洋身心診所</span>
+        <span class="link-desc">專業身心科門診，守護您的心理健康</span>
+      </span>
+      <span class="link-arrow">&rarr;</span>
+    </a>
+    <a href="https://blog.leepsyclinic.com/" class="link-card" target="_blank" rel="noopener">
+      <span class="link-icon">📨</span>
+      <span class="link-info">
+        <span class="link-name">訂閱電子報</span>
+        <span class="link-desc">李政洋身心診所部落格，定期獲得最新衛教資訊</span>
+      </span>
+      <span class="link-arrow">&rarr;</span>
+    </a>
+    <a href="https://buymeacoffee.com/CYlee" class="link-card" target="_blank" rel="noopener">
+      <span class="link-icon">☕</span>
+      <span class="link-info">
+        <span class="link-name">Buy Me a Coffee</span>
+        <span class="link-desc">支持本研究日報持續運作</span>
+      </span>
+      <span class="link-arrow">&rarr;</span>
+    </a>
+  </div>
+
+  <footer>
+    <span>資料來源：PubMed &middot; 分析模型：nvidia/nemotron-3-ultra-550b-a55b</span>
+    <span><a href="https://github.com/u8901006/menopause-insomnia">GitHub</a></span>
+  </footer>
+</div>
+</body>
+</html>
